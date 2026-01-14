@@ -4,7 +4,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IsaBella’s Barista Online Training</title>
 
-<!-- PDF Generator -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
@@ -12,11 +11,11 @@ body{
   margin:0;
   font-family:-apple-system,BlinkMacSystemFont;
   background:linear-gradient(rgba(45,30,20,.9),rgba(45,30,20,.9)),
-  url("https://images.unsplash.com/photo-1509042239860-f550ce710b93");
+  url("https://images.unsplash.com/photo-1511920170033-f8396924c348");
   background-size:cover;
   color:#f5f1ec;
 }
-.app{max-width:1000px;margin:auto;padding:20px}
+.app{max-width:1100px;margin:auto;padding:20px}
 .card{
   background:rgba(255,255,255,.12);
   padding:20px;
@@ -34,8 +33,15 @@ button{
   margin-top:10px
 }
 .hidden{display:none}
-.lesson{background:rgba(255,255,255,.15);padding:12px;border-radius:12px;margin-top:10px}
-.admin{background:rgba(0,0,0,.4)}
+.lesson{
+  background:rgba(255,255,255,.15);
+  padding:14px;
+  border-radius:14px;
+  margin-top:12px;
+  line-height:1.5
+}
+.admin{background:rgba(0,0,0,.45)}
+h2,h3{margin-top:0}
 </style>
 </head>
 
@@ -43,69 +49,77 @@ button{
 <div class="app">
 
 <h1>☕ IsaBella’s Barista Online Training</h1>
-<p style="text-align:center">College-Level Professional Barista Education</p>
+<p style="text-align:center">
+College-Level Master Barista Certification Program
+</p>
 
-<!-- ENROLLMENT -->
+<!-- ENROLL -->
 <div id="enroll" class="card">
-  <h2>Enroll</h2>
-  <p>Full Professional Barista Program</p>
-  <p><strong>$149 – Lifetime Access + Certification</strong></p>
+  <h2>Professional Enrollment</h2>
+  <p>
+    Full Master-Class Barista Program<br>
+    Includes exams, certification, and lifetime access.
+  </p>
+  <p><strong>$199 – One-Time Enrollment</strong></p>
   <button onclick="enroll()">Enroll Now</button>
 </div>
 
 <!-- DASHBOARD -->
 <div id="dashboard" class="card hidden">
-  <h2>Course Catalog</h2>
-  <button onclick="openCourse()">Course 101 – Coffee History & Mastery</button>
-  <button onclick="startExam()">Final Exam</button>
+  <h2>Curriculum</h2>
+  <button onclick="openCourse('history')">Course 101 — Coffee History & Origins</button>
+  <button onclick="openCourse('beans')">Course 102 — Bean Science & Roasting</button>
+  <button onclick="openCourse('tools')">Course 201 — Equipment & Tools</button>
+  <button onclick="openCourse('drinks')">Course 301 — Drinks of the World</button>
+  <button onclick="openCourse('skills')">Course 401 — Master Barista Skills</button>
+  <button onclick="startExam()">Final Comprehensive Exam</button>
   <button onclick="openCertificate()">Download Certificate</button>
   <button onclick="openAdmin()">Instructor / Admin Panel</button>
 </div>
 
-<!-- COURSE -->
+<!-- COURSE VIEW -->
 <div id="course" class="card hidden">
-  <h2>Course 101 – Coffee History & Mastery</h2>
-  <div class="lesson">Coffee originated in Ethiopia and spread through Yemen via Sufi monasteries.</div>
-  <div class="lesson">Arabica vs Robusta: genetics, flavor, caffeine content.</div>
-  <div class="lesson">Global regions: Africa, Latin America, Asia-Pacific.</div>
-  <div class="lesson">All brewing methods: Espresso, Pour-Over, French Press, Cold Brew, Turkish.</div>
-  <div class="lesson">Espresso drinks: Latte, Cappuccino, Mocha, Flat White, Cortado, Americano.</div>
-  <div class="lesson">Master barista skills: extraction theory, milk science, workflow, hospitality.</div>
-  <button onclick="back()">Back</button>
+  <h2 id="courseTitle"></h2>
+  <div id="courseContent"></div>
+  <button onclick="back()">Back to Dashboard</button>
 </div>
 
 <!-- EXAM -->
 <div id="exam" class="card hidden">
-  <h2>Final Exam</h2>
-  <p id="q"></p>
-  <div id="opts"></div>
+  <h2>Final Master Barista Examination</h2>
+  <p id="question"></p>
+  <div id="options"></div>
 </div>
 
 <!-- CERT -->
 <div id="cert" class="card hidden">
-  <h2>🎓 Certificate Ready</h2>
-  <p>You passed the Professional Barista Exam.</p>
+  <h2>🎓 Certification Earned</h2>
+  <p>
+    You have successfully completed the
+    <strong>IsaBella’s Master Barista Program</strong>.
+  </p>
   <button onclick="generatePDF()">Download Certificate (PDF)</button>
-  <button onclick="back()">Back</button>
+  <button onclick="back()">Return</button>
 </div>
 
 <!-- ADMIN -->
 <div id="admin" class="card admin hidden">
   <h2>Instructor / Admin Panel</h2>
-  <p><strong>Enrollment:</strong> <span id="enrolledCount"></span></p>
+  <p><strong>Enrollment Count:</strong> <span id="enrolledCount"></span></p>
   <p><strong>Pass Rate:</strong> <span id="passRate"></span>%</p>
 
-  <h3>Accredited Partnerships</h3>
+  <h3>Accredited & Industry Partnerships</h3>
   <ul>
     <li>Independent Specialty Coffee Roasters</li>
-    <li>Local Café Apprenticeships</li>
-    <li>Hospitality Training Programs</li>
-    <li>Barista Guild–Aligned Curriculum</li>
+    <li>Third-Wave Café Apprenticeships</li>
+    <li>Hospitality & Culinary Training Programs</li>
+    <li>Barista Guild-Aligned Curriculum Standards</li>
   </ul>
 
   <p style="font-size:14px">
-    *IsaBella’s certificates are industry-recognized professional credentials.
-    Government accreditation requires institutional licensing and partnerships.
+    IsaBella’s certifications are professional industry credentials.
+    Government or state accreditation requires institutional licensing,
+    which can be pursued through partnerships.
   </p>
 
   <button onclick="back()">Exit Admin</button>
@@ -114,34 +128,95 @@ button{
 </div>
 
 <script>
-let enrolled=false;
-let examIndex=0;
-let score=0;
+let enrolled=false, examIndex=0, score=0;
+
+const courses={
+history:{
+title:"Coffee History & Origins",
+lessons:[
+"Ethiopia (9th Century): Legend of Kaldi and the energized goats. Early caffeine use likely predates the story.",
+"Yemen & Arabia: Sufi monasteries used coffee for long nights of prayer. Mocha became a global trade hub.",
+"Europe (17th Century): Coffeehouses known as 'penny universities' became cultural centers.",
+"Colonial Expansion: Dutch, French, Portuguese spread coffee worldwide. Brazil emerged as global leader."
+]},
+beans:{
+title:"Bean Science & Roasting",
+lessons:[
+"Species: Arabica (aromatic, acidic), Robusta (high caffeine, earthy), Liberica & Excelsa (rare).",
+"Terroir: Soil, altitude, climate, and processing define flavor.",
+"Processing: Washed (bright), Natural (sweet, fruity), Honey (balanced).",
+"Roast Levels: Light (acidic), Medium (balanced), Dark (smoky).",
+"Roasting Chemistry: Maillard reaction, caramelization, first & second crack."
+]},
+tools:{
+title:"Equipment & Tools",
+lessons:[
+"Burr grinders ensure uniform particle size critical for extraction.",
+"Espresso machines extract coffee at ~9 bars of pressure.",
+"Scales ensure repeatable dosing and ratios.",
+"Brewers: V60, Chemex, French Press, AeroPress, Cold Brew systems.",
+"Accessories: Tamper, knock box, thermometer, timers."
+]},
+drinks:{
+title:"Drinks of the World",
+lessons:[
+"Espresso: 25–30 ml under pressure, Italy.",
+"Americano: Espresso + hot water (WWII origin).",
+"Latte: Espresso + steamed milk + microfoam.",
+"Cappuccino: 1:1:1 espresso, milk, foam.",
+"Mocha: Espresso + chocolate + milk.",
+"Flat White: Thin microfoam, bold espresso.",
+"Affogato: Espresso over ice cream.",
+"Cold Brew: Cold extraction 12–24 hrs."
+]},
+skills:{
+title:"Master Barista Skills",
+lessons:[
+"Extraction science: time, grind, temp, pressure, ratio.",
+"Milk texturing: stretch, roll, polish; 140–155°F sweet spot.",
+"Latte art fundamentals: heart, rosetta, tulip.",
+"Sensory skills: cupping, tasting acidity, sweetness, body.",
+"Professional workflow, cleanliness, hospitality, efficiency."
+]}
+};
 
 const exam=[
- {q:"Where did coffee originate?",o:["Brazil","Ethiopia","Italy"],a:"Ethiopia"},
- {q:"Which bean has more caffeine?",o:["Arabica","Robusta"],a:"Robusta"},
- {q:"What defines espresso extraction?",o:["Pressure","Boiling","Free pour"],a:"Pressure"},
- {q:"Milk foam texture is controlled by?",o:["Protein & temp","Sugar","Fat only"],a:"Protein & temp"},
- {q:"A Mocha contains?",o:["Tea","Chocolate","Caramel"],a:"Chocolate"}
+{q:"Coffee originated in?",o:["Brazil","Ethiopia","Italy"],a:"Ethiopia"},
+{q:"Robusta is known for?",o:["Low caffeine","High caffeine"],a:"High caffeine"},
+{q:"Ideal espresso extraction uses?",o:["Pressure","Boiling"],a:"Pressure"},
+{q:"Milk sweetness peaks at?",o:["100°F","140–155°F"],a:"140–155°F"},
+{q:"Mocha historically refers to?",o:["Chocolate","Yemen port"],a:"Yemen port"}
 ];
 
 function enroll(){
-  alert("Enrollment successful (Stripe-ready placeholder)");
+  alert("Enrollment successful (Stripe integration placeholder).");
   enrolled=true;
   localStorage.setItem("enrolled","true");
   show("dashboard");
 }
 
-function openCourse(){show("course")}
+function openCourse(id){
+  show("course");
+  document.getElementById("courseTitle").innerText=courses[id].title;
+  const c=document.getElementById("courseContent");
+  c.innerHTML="";
+  courses[id].lessons.forEach(l=>{
+    const d=document.createElement("div");
+    d.className="lesson";
+    d.innerText=l;
+    c.appendChild(d);
+  });
+}
+
 function startExam(){
   score=0;examIndex=0;
-  show("exam");loadQ()
+  show("exam");loadQ();
 }
+
 function loadQ(){
   const q=exam[examIndex];
-  document.getElementById("q").innerText=q.q;
-  const o=document.getElementById("opts");
+  document.getElementById("question").innerText=q.q;
+  const o=document.getElementById("options");
   o.innerHTML="";
   q.o.forEach(x=>{
     const b=document.createElement("button");
@@ -150,40 +225,47 @@ function loadQ(){
     o.appendChild(b);
   });
 }
+
 function check(x){
   if(x===exam[examIndex].a)score++;
   examIndex++;
   examIndex<exam.length?loadQ():finishExam();
 }
+
 function finishExam(){
   const pass=score>=4;
   localStorage.setItem("passed",pass);
-  pass?show("cert"):alert("You did not pass. Retake exam.");
+  pass?show("cert"):alert("Exam not passed. Review coursework.");
   show(pass?"cert":"dashboard");
 }
+
 function openCertificate(){
-  localStorage.getItem("passed")==="true"?show("cert"):alert("Pass exam first");
+  localStorage.getItem("passed")==="true"?show("cert"):alert("Pass the exam first.");
 }
+
 function generatePDF(){
   const {jsPDF}=window.jspdf;
   const pdf=new jsPDF();
   pdf.text("IsaBella’s Barista Online Training",20,30);
-  pdf.text("Certified Professional Barista",20,50);
+  pdf.text("Master Barista Certification",20,50);
   pdf.text("Awarded to Student",20,70);
   pdf.text("Date: "+new Date().toLocaleDateString(),20,90);
-  pdf.save("IsaBella-Barista-Certificate.pdf");
+  pdf.save("IsaBella-Master-Barista-Certificate.pdf");
 }
+
 function openAdmin(){
   document.getElementById("enrolledCount").innerText=enrolled?1:0;
   document.getElementById("passRate").innerText=localStorage.getItem("passed")==="true"?100:0;
   show("admin");
 }
+
 function back(){show("dashboard")}
 function show(id){
   ["enroll","dashboard","course","exam","cert","admin"]
   .forEach(x=>document.getElementById(x).classList.add("hidden"));
   document.getElementById(id).classList.remove("hidden");
 }
+
 if(localStorage.getItem("enrolled")==="true"){enrolled=true;show("dashboard")}
 </script>
 
