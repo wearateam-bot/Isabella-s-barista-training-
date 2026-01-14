@@ -1,45 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>IsaBella’s Barista Online Training</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IsaBella’s Barista Online Training</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(rgba(60,42,33,.8), rgba(60,42,33,.8)),
+    url("https://images.unsplash.com/photo-1509042239860-f550ce710b93");
+  background-size: cover;
+  background-position: center;
+  color: #f5f1ec;
+}
+
+.app {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+.card {
+  background: rgba(255,255,255,.1);
+  border-radius: 18px;
+  padding: 20px;
+  margin: 15px 0;
+  backdrop-filter: blur(8px);
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  background: #c9a26d;
+  color: #3c2a21;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+button:disabled {
+  opacity: .5;
+}
+
+.hidden {
+  display: none;
+}
+
+.quiz-option {
+  background: rgba(255,255,255,.15);
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 12px;
+}
+</style>
 </head>
+
 <body>
 
-  <div class="app-container">
-    <header>
-      <h1>☕ IsaBella’s Barista Online Training</h1>
-      <p>From bean to bar — learn the craft with calm confidence.</p>
-    </header>
+<div class="app">
 
-    <section class="courses">
+<h1>☕ IsaBella’s Barista Online Training</h1>
+<p style="text-align:center">From bean to bar — learn the craft with calm confidence.</p>
 
-      <div class="course-card">
-        <h2>Beginner</h2>
-        <p>Coffee history, origins, beans, and brewing basics.</p>
-        <button onclick="purchase('Beginner')">Start Brewing</button>
-      </div>
+<!-- COURSE HUB -->
+<div id="hub">
 
-      <div class="course-card locked">
-        <h2>Intermediate</h2>
-        <p>Espresso, milk science, and café workflow.</p>
-        <button disabled>Locked</button>
-      </div>
-
-      <div class="course-card locked">
-        <h2>Advanced</h2>
-        <p>Specialty coffee, latte art, and operations.</p>
-        <button disabled>Locked</button>
-      </div>
-
-    </section>
-
-    <footer>
-      <p>© 2026 IsaBella’s Barista Online Training</p>
-    </footer>
+  <div class="card">
+    <h2>Beginner</h2>
+    <p>Coffee origins, beans, roast levels, and brewing basics.</p>
+    <button onclick="startCourse('beginner')">Start Brewing</button>
   </div>
 
-  <script src="app.js"></script>
+  <div class="card">
+    <h2>Intermediate</h2>
+    <p>Espresso, milk science, café workflow.</p>
+    <button onclick="startCourse('intermediate')" disabled>Locked</button>
+  </div>
+
+  <div class="card">
+    <h2>Advanced</h2>
+    <p>Specialty coffee, tasting, latte art.</p>
+    <button onclick="startCourse('advanced')" disabled>Locked</button>
+  </div>
+
+</div>
+
+<!-- COURSE VIEW -->
+<div id="course" class="hidden card">
+  <h2 id="courseTitle"></h2>
+  <p id="lessonText"></p>
+  <button onclick="startQuiz()">Take Quiz</button>
+  <button onclick="goHome()">Back to Hub</button>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="hidden card">
+  <h2>Quiz</h2>
+  <p id="question"></p>
+  <div id="options"></div>
+</div>
+
+<!-- CERTIFICATE -->
+<div id="certificate" class="hidden card">
+  <h2>🎓 Certificate Earned</h2>
+  <p>You have completed:</p>
+  <p><strong>IsaBella’s Certified Barista – Beginner Level</strong></p>
+  <button onclick="goHome()">Return Home</button>
+</div>
+
+</div>
+
+<script>
+const courses = {
+  beginner: {
+    title: "Beginner Barista Foundations",
+    lesson: "Coffee originated in Ethiopia and spread globally through trade. Arabica and Robusta are the two main species, each with unique flavor profiles.",
+    quiz: {
+      q: "Where did coffee originate?",
+      options: ["Brazil", "Ethiopia", "Italy"],
+      answer: "Ethiopia"
+    }
+  }
+};
+
+function startCourse(level) {
+  document.getElementById("hub").classList.add("hidden");
+  document.getElementById("course").classList.remove("hidden");
+  document.getElementById("courseTitle").innerText = courses[level].title;
+  document.getElementById("lessonText").innerText = courses[level].lesson;
+}
+
+function startQuiz() {
+  document.getElementById("course").classList.add("hidden");
+  document.getElementById("quiz").classList.remove("hidden");
+  document.getElementById("question").innerText = courses.beginner.quiz.q;
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  courses.beginner.quiz.options.forEach(opt => {
+    const div = document.createElement("div");
+    div.className = "quiz-option";
+    div.innerText = opt;
+    div.onclick = () => checkAnswer(opt);
+    optionsDiv.appendChild(div);
+  });
+}
+
+function checkAnswer(selected) {
+  if (selected === courses.beginner.quiz.answer) {
+    document.getElementById("quiz").classList.add("hidden");
+    document.getElementById("certificate").classList.remove("hidden");
+    localStorage.setItem("beginnerComplete", "true");
+  } else {
+    alert("Try again ☕");
+  }
+}
+
+function goHome() {
+  document.getElementById("hub").classList.remove("hidden");
+  document.getElementById("course").classList.add("hidden");
+  document.getElementById("quiz").classList.add("hidden");
+  document.getElementById("certificate").classList.add("hidden");
+}
+</script>
+
 </body>
 </html>
